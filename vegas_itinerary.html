@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Las Vegas · Anniversary Getaway</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0C0B09;
+  --bg2:       #141210;
+  --card:      #181510;
+  --gold:      #C9A96E;
+  --gold-lt:   #E8C98A;
+  --gold-dim:  #7A6240;
+  --ivory:     #F0E6D0;
+  --ivory-dim: #9A8E7A;
+  --rose:      #C4687A;
+  --rose-lt:   #E89AAA;
+  --teal:      #4A9B8E;
+  --teal-lt:   #7DC4BA;
+  --border:    rgba(201,169,110,0.2);
+  --border-lt: rgba(201,169,110,0.08);
+  --safe-b:    env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--ivory);
+  font-family:'Josefin Sans',sans-serif;
+  font-weight:300;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── TEXTURE ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* Vignette */
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  pointer-events:none;z-index:0;
+}
+
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 0 120px}
+
+/* ── HERO ── */
+.hero{
+  text-align:center;
+  padding:52px 24px 40px;
+  position:relative;
+  border-bottom:1px solid var(--border);
+}
+
+/* Art Deco corner ornaments */
+.hero::before,.hero::after{
+  content:'';position:absolute;
+  width:60px;height:60px;
+  border-color:var(--gold-dim);
+  border-style:solid;
+  opacity:0.5;
+}
+.hero::before{top:20px;left:20px;border-width:1px 0 0 1px}
+.hero::after{top:20px;right:20px;border-width:1px 1px 0 0}
+
+.hero-eyebrow{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:10px;letter-spacing:5px;
+  color:var(--gold);opacity:0.7;
+  text-transform:uppercase;margin-bottom:16px;
+}
+
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,11vw,72px);
+  font-weight:300;line-height:1;
+  color:var(--gold-lt);
+  letter-spacing:2px;
+  text-shadow:0 0 40px rgba(201,169,110,0.25);
+}
+
+.hero h1 em{
+  display:block;
+  font-family:'IM Fell English',serif;
+  font-style:italic;
+  font-size:0.55em;
+  color:var(--rose-lt);
+  letter-spacing:4px;
+  margin-top:4px;
+}
+
+.hero-dates{
+  font-size:11px;letter-spacing:4px;
+  color:var(--ivory-dim);text-transform:uppercase;
+  margin-top:18px;
+}
+
+/* Deco divider */
+.deco-div{
+  display:flex;align-items:center;gap:12px;
+  margin:20px auto;width:fit-content;
+}
+.deco-div::before,.deco-div::after{
+  content:'';display:block;width:60px;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold-dim));
+}
+.deco-div::after{transform:scaleX(-1)}
+.deco-div span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;color:var(--gold);letter-spacing:2px;
+}
+
+/* Budget strip */
+.budget-row{
+  display:flex;justify-content:center;gap:28px;
+  padding:16px 0 0;
+  flex-wrap:wrap;
+}
+.bstat{text-align:center}
+.bnum{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;
+  color:var(--gold-lt);display:block;
+}
+.blbl{font-size:9px;letter-spacing:2.5px;color:var(--ivory-dim);text-transform:uppercase;margin-top:2px}
+
+/* ── DAY TABS ── */
+.day-nav{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:40;
+  background:rgba(12,11,9,0.97);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+
+.day-tab{
+  padding:14px 8px 12px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  touch-action:manipulation;
+  border-bottom:2px solid transparent;
+  transition:border-color 0.25s,color 0.25s,background 0.25s;
+  position:relative;
+}
+.day-tab:active{background:rgba(201,169,110,0.05)}
+
+.day-tab-name{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:10px;letter-spacing:3px;
+  color:var(--ivory-dim);text-transform:uppercase;
+  transition:color 0.25s;
+  display:block;
+}
+.day-tab-date{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:600;
+  color:var(--ivory-dim);
+  transition:color 0.25s;
+  display:block;margin-top:1px;
+  line-height:1;
+}
+
+.day-tab.active{border-bottom-color:var(--gold)}
+.day-tab.active .day-tab-name{color:var(--gold)}
+.day-tab.active .day-tab-date{color:var(--gold-lt)}
+
+/* Progress pip per tab */
+.day-pip{
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;
+  background:var(--gold);opacity:0;
+  transition:opacity 0.3s;
+}
+.day-tab.has-progress .day-pip{opacity:0.6}
+
+/* ── DAY PANELS ── */
+.day-panel{display:none}
+.day-panel.active{display:block}
+
+/* Day header */
+.day-header{
+  padding:28px 24px 20px;
+  border-bottom:1px solid var(--border-lt);
+  position:relative;overflow:hidden;
+}
+
+/* Subtle background glow per day */
+.day-fri .day-header{background:linear-gradient(135deg,rgba(74,155,142,0.05) 0%,transparent 60%)}
+.day-sat .day-header{background:linear-gradient(135deg,rgba(201,169,110,0.06) 0%,transparent 60%)}
+.day-sun .day-header{background:linear-gradient(135deg,rgba(196,104,122,0.07) 0%,transparent 60%)}
+.day-mon .day-header{background:linear-gradient(135deg,rgba(201,169,110,0.04) 0%,transparent 60%)}
+
+.day-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;
+  letter-spacing:2px;color:var(--gold-lt);
+}
+.day-subtitle{
+  font-size:10px;letter-spacing:3px;
+  color:var(--ivory-dim);text-transform:uppercase;
+  margin-top:4px;
+}
+
+.day-meta{
+  display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;
+}
+.day-tag{
+  font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:2px;
+}
+.tag-travel{background:rgba(74,155,142,0.12);color:var(--teal-lt);border:1px solid rgba(74,155,142,0.25)}
+.tag-casino{background:rgba(201,169,110,0.1);color:var(--gold);border:1px solid rgba(201,169,110,0.22)}
+.tag-romance{background:rgba(196,104,122,0.12);color:var(--rose-lt);border:1px solid rgba(196,104,122,0.25)}
+.tag-food{background:rgba(139,100,60,0.15);color:#D4A87A;border:1px solid rgba(139,100,60,0.28)}
+
+/* Day spend */
+.day-spend{
+  margin-top:10px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-style:italic;
+  color:var(--ivory-dim);
+  letter-spacing:1px;
+}
+
+/* ── TIMELINE ── */
+.tl{padding:0 0 12px}
+
+.tl-section{
+  padding:20px 24px 6px;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold-dim);
+  font-family:'Josefin Sans',sans-serif;
+  display:flex;align-items:center;gap:10px;
+}
+.tl-section::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,var(--border),transparent);
+}
+
+/* Row */
+.row{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:0;
+  padding:0 0 0 24px;
+  position:relative;
+  cursor:pointer;
+  touch-action:manipulation;
+  user-select:none;-webkit-user-select:none;
+}
+.row:active .rcard{background:rgba(201,169,110,0.04)}
+
+/* Timeline line */
+.row::before{
+  content:'';
+  position:absolute;
+  left:42px;top:0;bottom:0;
+  width:1px;
+  background:var(--border-lt);
+}
+.row:first-of-type::before{top:28px}
+.row:last-of-type::before{height:28px}
+
+/* Time column */
+.rtime{
+  padding:20px 0 4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;
+  color:var(--gold-dim);
+  letter-spacing:0.5px;
+  text-align:right;
+  padding-right:16px;
+  line-height:1.2;
+  flex-shrink:0;
+}
+
+/* Dot on line */
+.rdot{
+  position:absolute;
+  left:38px;
+  top:24px;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--bg);
+  border:1.5px solid var(--gold-dim);
+  z-index:2;
+  transition:background 0.2s,border-color 0.2s;
+}
+
+/* Card */
+.rcard{
+  margin:10px 24px 4px 16px;
+  background:var(--card);
+  border:1px solid var(--border-lt);
+  border-radius:4px;
+  padding:12px 14px;
+  position:relative;
+  transition:border-color 0.2s,opacity 0.2s;
+  overflow:hidden;
+  min-height:52px;
+}
+.rcard::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,rgba(201,169,110,0.12),transparent);
+}
+
+/* Done state */
+.row.done .rcard{
+  opacity:0.42;
+  border-color:rgba(201,169,110,0.06);
+}
+.row.done .rtitle{text-decoration:line-through;text-decoration-color:rgba(154,142,122,0.4);color:var(--ivory-dim)}
+.row.done .rdot{background:var(--gold-dim);border-color:var(--gold-dim)}
+.row.done .rdot::after{
+  content:'✓';
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:6px;color:var(--bg);font-weight:700;
+  font-family:sans-serif;
+}
+
+/* Special: highlight */
+.row.highlight .rcard{border-color:rgba(196,104,122,0.4);background:linear-gradient(135deg,rgba(196,104,122,0.06),var(--card))}
+.row.highlight .rdot{border-color:var(--rose);background:rgba(196,104,122,0.2)}
+
+.rtop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.rtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:600;
+  color:var(--ivory);line-height:1.2;flex:1;
+}
+.rcost{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;color:var(--gold);
+  flex-shrink:0;font-style:italic;
+  margin-top:1px;
+}
+
+.rloc{
+  font-size:10px;letter-spacing:1px;
+  color:var(--ivory-dim);text-transform:uppercase;
+  margin-top:4px;
+}
+
+.rnote{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:12px;color:var(--ivory-dim);
+  margin-top:5px;opacity:0.8;
+  line-height:1.4;
+}
+
+/* Type badge */
+.rtype{
+  display:inline-flex;align-items:center;
+  padding:2px 7px;border-radius:2px;
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  margin-top:6px;
+}
+.t-flight  {background:rgba(74,155,142,0.1);color:var(--teal-lt);border:1px solid rgba(74,155,142,0.2)}
+.t-hotel   {background:rgba(201,169,110,0.08);color:var(--gold);border:1px solid rgba(201,169,110,0.18)}
+.t-food    {background:rgba(139,100,60,0.12);color:#D4A87A;border:1px solid rgba(139,100,60,0.22)}
+.t-casino  {background:rgba(201,169,110,0.08);color:var(--gold-dim);border:1px solid rgba(201,169,110,0.15)}
+.t-romance {background:rgba(196,104,122,0.1);color:var(--rose-lt);border:1px solid rgba(196,104,122,0.22)}
+.t-travel  {background:rgba(74,155,142,0.08);color:var(--teal-lt);border:1px solid rgba(74,155,142,0.18)}
+.t-activity{background:rgba(120,100,200,0.1);color:#B8A8E8;border:1px solid rgba(120,100,200,0.2)}
+.t-shop    {background:rgba(180,140,100,0.1);color:#D4C090;border:1px solid rgba(180,140,100,0.2)}
+
+/* ── SPECIAL CARDS ── */
+/* Ceremony card */
+.rcard.ceremony{
+  border-color:rgba(196,104,122,0.5);
+  background:linear-gradient(135deg,rgba(196,104,122,0.1),var(--card));
+}
+.rcard.ceremony .rtitle{color:var(--rose-lt)}
+.rcard.ceremony::after{
+  content:'♥';
+  position:absolute;right:14px;bottom:12px;
+  font-size:28px;color:rgba(196,104,122,0.12);
+  font-family:serif;
+}
+
+/* Casino crawl compact card */
+.rcard.crawl{border-color:rgba(201,169,110,0.12)}
+.crawl-stops{
+  display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;
+}
+.cstop{
+  font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;
+  background:rgba(201,169,110,0.06);
+  color:var(--gold-dim);
+  border:1px solid rgba(201,169,110,0.12);
+}
+
+/* ── BOTTOM HUD ── */
+#hud{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(12,11,9,0.97);
+  border-top:1px solid var(--border);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding:10px 24px calc(10px + var(--safe-b));
+}
+.hud-inner{
+  max-width:680px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:8px;
+}
+.h-prog{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:10px;letter-spacing:2px;color:var(--ivory-dim);text-transform:uppercase;
+}
+.h-day{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--gold-lt);text-align:center;
+  font-style:italic;
+}
+.h-spend{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:10px;letter-spacing:2px;color:var(--ivory-dim);text-transform:uppercase;
+  text-align:right;
+}
+.h-val{color:var(--gold);font-weight:600}
+
+/* ── ANIMATIONS ── */
+.day-panel.active .rcard{
+  animation:slideUp 0.35s ease both;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.day-panel.active .row:nth-child(1)  .rcard{animation-delay:0.02s}
+.day-panel.active .row:nth-child(2)  .rcard{animation-delay:0.05s}
+.day-panel.active .row:nth-child(3)  .rcard{animation-delay:0.08s}
+.day-panel.active .row:nth-child(4)  .rcard{animation-delay:0.11s}
+.day-panel.active .row:nth-child(5)  .rcard{animation-delay:0.14s}
+.day-panel.active .row:nth-child(6)  .rcard{animation-delay:0.17s}
+.day-panel.active .row:nth-child(7)  .rcard{animation-delay:0.20s}
+.day-panel.active .row:nth-child(8)  .rcard{animation-delay:0.23s}
+.day-panel.active .row:nth-child(9)  .rcard{animation-delay:0.26s}
+.day-panel.active .row:nth-child(10) .rcard{animation-delay:0.29s}
+.day-panel.active .row:nth-child(11) .rcard{animation-delay:0.32s}
+.day-panel.active .row:nth-child(12) .rcard{animation-delay:0.35s}
+.day-panel.active .row:nth-child(13) .rcard{animation-delay:0.38s}
+.day-panel.active .row:nth-child(14) .rcard{animation-delay:0.41s}
+.day-panel.active .row:nth-child(15) .rcard{animation-delay:0.44s}
+.day-panel.active .row:nth-child(16) .rcard{animation-delay:0.47s}
+
+@media(max-width:480px){
+  .hero{padding:40px 18px 28px}
+  .rcard{margin:8px 14px 3px 14px;padding:10px 12px}
+  .rtitle{font-size:15px}
+  .row{padding-left:18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Las Vegas · Anniversary Getaway</div>
+    <h1>The Strip<em>Our Way</em></h1>
+    <div class="hero-dates">7 June — 10 June 2025</div>
+    <div class="deco-div"><span>✦</span></div>
+    <div class="budget-row">
+      <div class="bstat"><span class="bnum">4</span><div class="blbl">Nights</div></div>
+      <div class="bstat"><span class="bnum" id="hero-done">0</span><div class="blbl">Done</div></div>
+      <div class="bstat"><span class="bnum">$3,919</span><div class="blbl">Est. Total</div></div>
+      <div class="bstat"><span class="bnum">♥</span><div class="blbl">Vow Renewal</div></div>
+    </div>
+  </div>
+
+  <!-- DAY TABS -->
+  <div class="day-nav">
+    <div class="day-tab active" id="tab-fri" onclick="switchDay('fri')">
+      <span class="day-tab-name">Friday</span>
+      <span class="day-tab-date">6</span>
+      <div class="day-pip"></div>
+    </div>
+    <div class="day-tab" id="tab-sat" onclick="switchDay('sat')">
+      <span class="day-tab-name">Saturday</span>
+      <span class="day-tab-date">7</span>
+      <div class="day-pip"></div>
+    </div>
+    <div class="day-tab" id="tab-sun" onclick="switchDay('sun')">
+      <span class="day-tab-name">Sunday</span>
+      <span class="day-tab-date">8</span>
+      <div class="day-pip"></div>
+    </div>
+    <div class="day-tab" id="tab-mon" onclick="switchDay('mon')">
+      <span class="day-tab-name">Monday</span>
+      <span class="day-tab-date">9</span>
+      <div class="day-pip"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FRIDAY
+  ════════════════════════════════════════════ -->
+  <div class="day-panel active day-fri" id="panel-fri">
+    <div class="day-header">
+      <div class="day-title">Friday — Travel Day</div>
+      <div class="day-subtitle">Eaglescliffe → London → Heathrow → Las Vegas</div>
+      <div class="day-meta">
+        <span class="day-tag tag-travel">Long Haul</span>
+        <span class="day-tag tag-casino">First Night</span>
+        <span class="day-tag tag-food">Late Bites</span>
+      </div>
+      <div class="day-spend">Estimated spend · <strong>$1,231</strong></div>
+    </div>
+    <div class="tl">
+
+      <div class="tl-section">Morning · Home</div>
+
+      <div class="row" id="r-f1" onclick="toggle('f1')">
+        <div class="rtime">07:30</div>
+        <div class="rdot" id="dot-f1"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Drop-off at Breakfast Club & Nursery</div></div>
+          <div class="rloc">Home</div>
+          <div class="rnote">The adventure begins — Quinn & Thea sorted ✓</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Travel · UK</div>
+
+      <div class="row" id="r-f2" onclick="toggle('f2')">
+        <div class="rtime">09:26</div>
+        <div class="rdot" id="dot-f2"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Train to London — Eaglescliffe → York → KGX</div></div>
+          <div class="rloc">Eaglescliffe Station</div>
+          <div class="rnote">Change at York for King's Cross</div>
+          <div class="rtype t-travel">Train</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-f3" onclick="toggle('f3')">
+        <div class="rtime">13:00</div>
+        <div class="rdot" id="dot-f3"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Overground → Elizabeth Line to Heathrow</div></div>
+          <div class="rloc">KGX → Farringdon → LHR</div>
+          <div class="rnote">Overground to Farringdon, then Elizabeth Line direct to the airport</div>
+          <div class="rtype t-travel">Transit</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Heathrow</div>
+
+      <div class="row" id="r-f4" onclick="toggle('f4')">
+        <div class="rtime">14:30</div>
+        <div class="rdot" id="dot-f4"></div>
+        <div class="rcard">
+          <div class="rtop">
+            <div class="rtitle">Check-in & Airport Lounge</div>
+          </div>
+          <div class="rloc">LHR — Clubrooms Lounge</div>
+          <div class="rnote">Lounge access included — drinks, food, decompress</div>
+          <div class="rtype t-travel">Lounge</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-f5" onclick="toggle('f5')">
+        <div class="rtime">18:00</div>
+        <div class="rdot" id="dot-f5"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">✈ Depart London Heathrow</div><div class="rcost">LHR → LAS</div></div>
+          <div class="rloc">LHR Airport</div>
+          <div class="rnote">Wheels up ✈</div>
+          <div class="rtype t-flight">Flight</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Las Vegas Arrival</div>
+
+      <div class="row highlight" id="r-f6" onclick="toggle('f6')">
+        <div class="rtime">20:45</div>
+        <div class="rdot" id="dot-f6"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Land in Las Vegas 🎰</div><div class="rcost">$40</div></div>
+          <div class="rloc">LAS Airport → Vdara</div>
+          <div class="rnote">Uber/Lyft to Vdara — ~20–25 mins</div>
+          <div class="rtype t-travel">Uber</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-f7" onclick="toggle('f7')">
+        <div class="rtime">21:45</div>
+        <div class="rdot" id="dot-f7"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Check in — Vdara Hotel</div><div class="rcost">$806</div></div>
+          <div class="rloc">Vdara Hotel & Spa</div>
+          <div class="rnote">Ask for a high-level Fountain view room if available</div>
+          <div class="rtype t-hotel">Hotel</div>
+        </div>
+      </div>
+
+      <div class="tl-section">First Night Out</div>
+
+      <div class="row" id="r-f8" onclick="toggle('f8')">
+        <div class="rtime">22:00</div>
+        <div class="rdot" id="dot-f8"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Secret Pizza</div><div class="rcost">$35</div></div>
+          <div class="rloc">Cosmopolitan · 3rd Level</div>
+          <div class="rnote">Next to Jaleo and Blue Ribbon — find the unmarked door</div>
+          <div class="rtype t-food">Dinner</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-f9" onclick="toggle('f9')">
+        <div class="rtime">22:30</div>
+        <div class="rdot" id="dot-f9"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Chandelier Bar</div><div class="rcost">$120</div></div>
+          <div class="rloc">Cosmopolitan</div>
+          <div class="rnote">Iconic multi-level bar — order the Verbena if it's still on the menu</div>
+          <div class="rtype t-food">Cocktails</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-f10" onclick="toggle('f10')">
+        <div class="rtime">22:45</div>
+        <div class="rdot" id="dot-f10"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Gambling & Bellagio Fountain Stroll</div><div class="rcost">$150</div></div>
+          <div class="rloc">Aria / Cosmo Casino</div>
+          <div class="rnote">Optional: walk to Bellagio fountains — the 11pm show is spectacular</div>
+          <div class="rtype t-casino">Casino</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-f11" onclick="toggle('f11')">
+        <div class="rtime">23:30</div>
+        <div class="rdot" id="dot-f11"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Optional Nightcap</div><div class="rcost">$80</div></div>
+          <div class="rloc">Vice Versa Lounge, Vdara</div>
+          <div class="rnote">Outdoor fire pits — perfect for a late-night wind-down</div>
+          <div class="rtype t-food">Bar</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SATURDAY — Casino Crawl Day
+  ════════════════════════════════════════════ -->
+  <div class="day-panel day-sat" id="panel-sat">
+    <div class="day-header">
+      <div class="day-title">Saturday — The Crawl</div>
+      <div class="day-subtitle">25 Casinos · North to South · High Roller at Sunset</div>
+      <div class="day-meta">
+        <span class="day-tag tag-casino">Casino Crawl</span>
+        <span class="day-tag tag-food">Street Food</span>
+        <span class="day-tag tag-travel">High Roller</span>
+      </div>
+      <div class="day-spend">Estimated spend · <strong>$845</strong></div>
+    </div>
+    <div class="tl">
+
+      <div class="tl-section">North Strip · 09:00–11:30</div>
+
+      <div class="row" id="r-s1" onclick="toggle('s1')">
+        <div class="rtime">09:00</div>
+        <div class="rdot" id="dot-s1"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Fontainebleau</div><div class="rcost">$50</div></div>
+          <div class="rloc">North Strip — Start Strong</div>
+          <div class="rnote">Brand new casino — explore before it gets busy</div>
+          <div class="rtype t-casino">Casino</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s2" onclick="toggle('s2')">
+        <div class="rtime">09:15</div>
+        <div class="rdot" id="dot-s2"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Resorts World + Famous Foods Hall</div><div class="rcost">$85</div></div>
+          <div class="rloc">Resorts World</div>
+          <div class="rnote">Grab breakfast at Famous Foods Food Hall before moving on</div>
+          <div class="rtype t-food">Food + Casino</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s3" onclick="toggle('s3')">
+        <div class="rtime">10:00</div>
+        <div class="rdot" id="dot-s3"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Encore → Wynn → Treasure Island</div><div class="rcost">$60</div></div>
+          <div class="rloc">North Strip Corridor</div>
+          <div class="crawl-stops">
+            <span class="cstop">Encore</span><span class="cstop">Wynn</span><span class="cstop">TI</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Mid Strip · 11:30–13:00</div>
+
+      <div class="row" id="r-s4" onclick="toggle('s4')">
+        <div class="rtime">11:30</div>
+        <div class="rdot" id="dot-s4"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Venetian → Palazzo → LINQ</div><div class="rcost">$60</div></div>
+          <div class="rloc">Mid Strip</div>
+          <div class="crawl-stops">
+            <span class="cstop">Venetian</span><span class="cstop">Palazzo</span><span class="cstop">LINQ</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s5" onclick="toggle('s5')">
+        <div class="rtime">13:00</div>
+        <div class="rdot" id="dot-s5"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Lunch — LINQ Promenade</div><div class="rcost">$80</div></div>
+          <div class="rloc">LINQ Promenade</div>
+          <div class="rnote">Shake Shack, Beer Park, or In-N-Out — your call</div>
+          <div class="rtype t-food">Lunch</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Centre Strip · 13:30–17:15</div>
+
+      <div class="row" id="r-s6" onclick="toggle('s6')">
+        <div class="rtime">13:30</div>
+        <div class="rdot" id="dot-s6"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Flamingo → Cromwell → Caesars</div><div class="rcost">$60</div></div>
+          <div class="rloc">Centre Strip</div>
+          <div class="crawl-stops">
+            <span class="cstop">Flamingo</span><span class="cstop">Cromwell</span><span class="cstop">Caesars</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s7" onclick="toggle('s7')">
+        <div class="rtime">15:30</div>
+        <div class="rdot" id="dot-s7"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Bellagio → Cosmo → Aria → Park MGM</div><div class="rcost">$80</div></div>
+          <div class="rloc">Centre Strip South</div>
+          <div class="crawl-stops">
+            <span class="cstop">Bellagio</span><span class="cstop">Cosmo</span><span class="cstop">Aria</span><span class="cstop">Park MGM</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Sunset · High Roller · 17:15–20:00</div>
+
+      <div class="row" id="r-s8" onclick="toggle('s8')">
+        <div class="rtime">17:15</div>
+        <div class="rdot" id="dot-s8"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Prep + Wander LINQ Promenade</div></div>
+          <div class="rloc">LINQ Promenade</div>
+          <div class="rnote">Rest your feet, browse, freshen up before the High Roller</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-s9" onclick="toggle('s9')">
+        <div class="rtime">18:30</div>
+        <div class="rdot" id="dot-s9"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">High Roller — Happy Half Hour 🎡</div><div class="rcost">$110</div></div>
+          <div class="rloc">LINQ Promenade</div>
+          <div class="rnote">Open bar for the full 30-min rotation — best views on the Strip at sunset</div>
+          <div class="rtype t-activity">Attraction</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s10" onclick="toggle('s10')">
+        <div class="rtime">19:00</div>
+        <div class="rdot" id="dot-s10"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Dinner — LINQ Promenade</div><div class="rcost">$60</div></div>
+          <div class="rloc">LINQ Promenade</div>
+          <div class="rnote">Shake Shack / Beer Park / In-N-Out round two</div>
+          <div class="rtype t-food">Dinner</div>
+        </div>
+      </div>
+
+      <div class="tl-section">South Strip · 19:30–23:00</div>
+
+      <div class="row" id="r-s11" onclick="toggle('s11')">
+        <div class="rtime">19:30</div>
+        <div class="rdot" id="dot-s11"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Harrah's → Casino Royale</div><div class="rcost">$40</div></div>
+          <div class="rloc">Mid–South Strip</div>
+          <div class="crawl-stops">
+            <span class="cstop">Harrah's</span><span class="cstop">Casino Royale</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s12" onclick="toggle('s12')">
+        <div class="rtime">20:00</div>
+        <div class="rdot" id="dot-s12"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">NYNY → Excalibur → Luxor → Mandalay Bay → Tram → MGM</div><div class="rcost">$100</div></div>
+          <div class="rloc">South Strip</div>
+          <div class="crawl-stops">
+            <span class="cstop">NYNY</span><span class="cstop">Excalibur</span><span class="cstop">Luxor</span><span class="cstop">Mandalay Bay</span><span class="cstop">Tram</span><span class="cstop">MGM</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-s13" onclick="toggle('s13')">
+        <div class="rtime">22:00</div>
+        <div class="rdot" id="dot-s13"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Planet Hollywood → Paris → Horseshoe</div><div class="rcost">$60</div></div>
+          <div class="rloc">Centre Strip — Finish Line</div>
+          <div class="crawl-stops">
+            <span class="cstop">Planet Hollywood</span><span class="cstop">Paris</span><span class="cstop">Horseshoe</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SUNDAY — The Big Day
+  ════════════════════════════════════════════ -->
+  <div class="day-panel day-sun" id="panel-sun">
+    <div class="day-header">
+      <div class="day-title">Sunday — The Big Day ♥</div>
+      <div class="day-subtitle">Brunch · Blowout · Vows · Anniversary Dinner</div>
+      <div class="day-meta">
+        <span class="day-tag tag-romance">Vow Renewal</span>
+        <span class="day-tag tag-food">Fine Dining</span>
+        <span class="day-tag tag-casino">Light Casino</span>
+      </div>
+      <div class="day-spend">Estimated spend · <strong>$1,520</strong></div>
+    </div>
+    <div class="tl">
+
+      <div class="tl-section">Morning</div>
+
+      <div class="row" id="r-su1" onclick="toggle('su1')">
+        <div class="rtime">09:15</div>
+        <div class="rdot" id="dot-su1"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Leave Vdara</div></div>
+          <div class="rloc">Vdara Hotel</div>
+          <div class="rnote">Up and out — big day ahead</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-su2" onclick="toggle('su2')">
+        <div class="rtime">09:30</div>
+        <div class="rdot" id="dot-su2"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Brunch at Giada</div><div class="rcost">$150</div></div>
+          <div class="rloc">The Cromwell</div>
+          <div class="rnote">Italian-style brunch — by Gordon Ramsay's rival 😄 — treat yourselves</div>
+          <div class="rtype t-food">Brunch</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Mid Morning · Casino Hop</div>
+
+      <div class="row" id="r-su3" onclick="toggle('su3')">
+        <div class="rtime">11:00</div>
+        <div class="rdot" id="dot-su3"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Casino Hop — End at Fashion Show Mall</div><div class="rcost">$100</div></div>
+          <div class="rloc">Mid Strip → Fashion Show</div>
+          <div class="crawl-stops">
+            <span class="cstop">Cromwell</span><span class="cstop">Flamingo</span><span class="cstop">Harrah's</span><span class="cstop">LINQ</span><span class="cstop">Venetian</span><span class="cstop">Palazzo</span><span class="cstop">Fashion Show</span>
+          </div>
+          <div class="rtype t-casino">Casino Hop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-su4" onclick="toggle('su4')">
+        <div class="rtime">13:30</div>
+        <div class="rdot" id="dot-su4"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Midday Snack</div><div class="rcost">$30</div></div>
+          <div class="rloc">Venetian / Fashion Show</div>
+          <div class="rnote">Black Tap (epic milkshakes) or Churroholic — a little pick-me-up</div>
+          <div class="rtype t-food">Snack</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Afternoon Prep</div>
+
+      <div class="row highlight" id="r-su5" onclick="toggle('su5')">
+        <div class="rtime">14:00</div>
+        <div class="rdot" id="dot-su5"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Drybar — Blowout Styling 💇‍♀️</div><div class="rcost">$55</div></div>
+          <div class="rloc">Fashion Show Mall</div>
+          <div class="rnote">Book online in advance — allow the full slot</div>
+          <div class="rtype t-shop">Beauty</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-su6" onclick="toggle('su6')">
+        <div class="rtime">14:30</div>
+        <div class="rdot" id="dot-su6"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Champagne from Lee's Discount Liquor</div><div class="rcost">$20</div></div>
+          <div class="rloc">Fashion Show Mall</div>
+          <div class="rnote">Matt's job 🍾</div>
+          <div class="rtype t-shop">Shop</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-su7" onclick="toggle('su7')">
+        <div class="rtime">15:30</div>
+        <div class="rdot" id="dot-su7"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Return to Vdara — Glam Up 💃</div></div>
+          <div class="rloc">Vdara Hotel</div>
+          <div class="rnote">Allow 1.5 hours to prep — no rushing today</div>
+        </div>
+      </div>
+
+      <div class="tl-section">The Ceremony ♥</div>
+
+      <div class="row highlight" id="r-su8" onclick="toggle('su8')">
+        <div class="rtime">16:55</div>
+        <div class="rdot" id="dot-su8"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Depart for Chapel</div><div class="rcost">$20</div></div>
+          <div class="rloc">Vdara → Little White Wedding Chapel</div>
+          <div class="rnote">Uber — ~15–20 mins from the Strip</div>
+          <div class="rtype t-travel">Uber</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-su9" onclick="toggle('su9')">
+        <div class="rtime">17:15</div>
+        <div class="rdot" id="dot-su9"></div>
+        <div class="rcard ceremony">
+          <div class="rtop"><div class="rtitle">Arrive at Chapel</div><div class="rcost">$250</div></div>
+          <div class="rloc">Little White Wedding Chapel</div>
+          <div class="rnote">Short ride from Strip — the most iconic chapel in Vegas</div>
+          <div class="rtype t-romance">Ceremony</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-su10" onclick="toggle('su10')">
+        <div class="rtime">17:45</div>
+        <div class="rdot" id="dot-su10"></div>
+        <div class="rcard ceremony">
+          <div class="rtop"><div class="rtitle">Vow Renewal & Strip Photos ♥</div><div class="rcost">$405</div></div>
+          <div class="rloc">Little White Wedding Chapel</div>
+          <div class="rnote">Romantic, lighthearted — and then golden hour photos on the Strip</div>
+          <div class="rtype t-romance">Vow Renewal</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Evening</div>
+
+      <div class="row highlight" id="r-su11" onclick="toggle('su11')">
+        <div class="rtime">20:30</div>
+        <div class="rdot" id="dot-su11"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Anniversary Dinner — Eiffel Tower Restaurant</div><div class="rcost">$400</div></div>
+          <div class="rloc">Paris Las Vegas</div>
+          <div class="rnote">Request window seat + mention it's a honeymoon/anniversary return — they're brilliant with special occasions</div>
+          <div class="rtype t-food">Fine Dining</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-su12" onclick="toggle('su12')">
+        <div class="rtime">22:00</div>
+        <div class="rdot" id="dot-su12"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Cabinet of Curiosities / The Lock Speakeasy</div><div class="rcost">$90</div></div>
+          <div class="rloc">Horseshoe</div>
+          <div class="rnote">2-drink minimum in The Lock — hidden bar vibes to end the night</div>
+          <div class="rtype t-food">Bar</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MONDAY — Last Day
+  ════════════════════════════════════════════ -->
+  <div class="day-panel day-mon" id="panel-mon">
+    <div class="day-header">
+      <div class="day-title">Monday — Final Day</div>
+      <div class="day-subtitle">Last Spin · Tattoos · Homeward</div>
+      <div class="day-meta">
+        <span class="day-tag tag-casino">Last Gamble</span>
+        <span class="day-tag tag-food">Hangover Brunch</span>
+        <span class="day-tag tag-romance">Matching Tattoos</span>
+      </div>
+      <div class="day-spend">Estimated spend · <strong>$430</strong> + flight</div>
+    </div>
+    <div class="tl">
+
+      <div class="tl-section">Morning</div>
+
+      <div class="row" id="r-m1" onclick="toggle('m1')">
+        <div class="rtime">09:30</div>
+        <div class="rdot" id="dot-m1"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Breakfast at Eggslut 🍳</div><div class="rcost">$150</div></div>
+          <div class="rloc">Cosmopolitan</div>
+          <div class="rnote">Proper hangover food — the Slut is the one to order (egg in a jar over potato purée)</div>
+          <div class="rtype t-food">Breakfast</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-m2" onclick="toggle('m2')">
+        <div class="rtime">11:00</div>
+        <div class="rdot" id="dot-m2"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Hotel Checkout — Leave Bags</div></div>
+          <div class="rloc">Vdara Hotel</div>
+          <div class="rnote">Ask to leave bags with concierge — still a full day ahead</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Afternoon</div>
+
+      <div class="row" id="r-m3" onclick="toggle('m3')">
+        <div class="rtime">11:30</div>
+        <div class="rdot" id="dot-m3"></div>
+        <div class="rcard crawl">
+          <div class="rtop"><div class="rtitle">Final Gamble — Last Spin 🎲</div><div class="rcost">$200</div></div>
+          <div class="rloc">Cosmo / Aria / Bellagio</div>
+          <div class="rnote">Set a hard limit — leave on a high (or a story)</div>
+          <div class="rtype t-casino">Casino</div>
+        </div>
+      </div>
+
+      <div class="row" id="r-m4" onclick="toggle('m4')">
+        <div class="rtime">14:00</div>
+        <div class="rdot" id="dot-m4"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Snack — Block 16 Urban Food Hall</div><div class="rcost">$40</div></div>
+          <div class="rloc">Cosmopolitan</div>
+          <div class="rnote">Huge variety of street food stalls — Holbox for the seafood, Esther's Kitchen for pasta</div>
+          <div class="rtype t-food">Snack</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-m5" onclick="toggle('m5')">
+        <div class="rtime">15:00</div>
+        <div class="rdot" id="dot-m5"></div>
+        <div class="rcard ceremony">
+          <div class="rtop"><div class="rtitle">Matching Tattoos 🖊</div></div>
+          <div class="rloc">Koolsville Tattoo</div>
+          <div class="rnote">Walk-in only — small pieces — permanent reminder of the trip ♥</div>
+          <div class="rtype t-romance">Tattoos</div>
+        </div>
+      </div>
+
+      <div class="tl-section">Homeward</div>
+
+      <div class="row" id="r-m6" onclick="toggle('m6')">
+        <div class="rtime">17:30</div>
+        <div class="rdot" id="dot-m6"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Freshen Up & Collect Bags</div></div>
+          <div class="rloc">Vdara Hotel</div>
+          <div class="rnote">One last look at the Fountains from the lobby</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-m7" onclick="toggle('m7')">
+        <div class="rtime">18:30</div>
+        <div class="rdot" id="dot-m7"></div>
+        <div class="rcard">
+          <div class="rtop"><div class="rtitle">Depart for LAS Airport</div><div class="rcost">$40</div></div>
+          <div class="rloc">LAS Airport</div>
+          <div class="rnote">International flight — allow extra time for check-in and security</div>
+          <div class="rtype t-travel">Uber</div>
+        </div>
+      </div>
+
+      <div class="row highlight" id="r-m8" onclick="toggle('m8')">
+        <div class="rtime">22:00</div>
+        <div class="rdot" id="dot-m8"></div>
+        <div class="rcard ceremony">
+          <div class="rtop"><div class="rtitle">✈ Depart Las Vegas</div></div>
+          <div class="rloc">LAS → UK</div>
+          <div class="rnote">End of anniversary getaway ❤️</div>
+          <div class="rtype t-flight">Flight Home</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-inner">
+    <div class="h-prog"><span class="h-val" id="h-done">0</span> / <span id="h-total">47</span> checked</div>
+    <div class="h-day" id="h-day">Friday</div>
+    <div class="h-spend">Day spend<br><span class="h-val" id="h-spend">$1,231</span></div>
+  </div>
+</div>
+
+<script>
+var done = {};
+var daySpend = {fri:'$1,231',sat:'$845',sun:'$1,520',mon:'$430'};
+var dayNames = {fri:'Friday',sat:'Saturday',sun:'Sunday',mon:'Monday'};
+var activeDay = 'fri';
+
+function switchDay(d) {
+  // Hide all panels, deactivate all tabs
+  var panels = document.querySelectorAll('.day-panel');
+  for (var i=0;i<panels.length;i++) panels[i].classList.remove('active');
+  var tabs = document.querySelectorAll('.day-tab');
+  for (var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+
+  document.getElementById('panel-'+d).classList.add('active');
+  document.getElementById('tab-'+d).classList.add('active');
+  activeDay = d;
+  updateHUD();
+
+  // Scroll to top of content
+  var panel = document.getElementById('panel-'+d);
+  panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggle(id) {
+  var row = document.getElementById('r-'+id);
+  if (!row) return;
+  if (done[id]) {
+    delete done[id];
+    row.classList.remove('done');
+  } else {
+    done[id] = true;
+    row.classList.add('done');
+  }
+  updateHUD();
+  updateDayPips();
+}
+
+function updateHUD() {
+  var total = Object.keys(done).length;
+  document.getElementById('h-done').textContent = total;
+  document.getElementById('hero-done').textContent = total;
+  document.getElementById('h-day').textContent = dayNames[activeDay];
+  document.getElementById('h-spend').textContent = daySpend[activeDay];
+}
+
+function updateDayPips() {
+  var days = ['fri','sat','sun','mon'];
+  for (var i=0;i<days.length;i++) {
+    var d = days[i];
+    var panel = document.getElementById('panel-'+d);
+    if (!panel) continue;
+    var rows = panel.querySelectorAll('.row');
+    var hasDone = false;
+    for (var j=0;j<rows.length;j++) {
+      if (rows[j].classList.contains('done')) { hasDone=true; break; }
+    }
+    var tab = document.getElementById('tab-'+d);
+    if (hasDone) tab.classList.add('has-progress');
+    else tab.classList.remove('has-progress');
+  }
+}
+
+updateHUD();
+</script>
+</body>
+</html>
