@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Vegas · Packing List</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0C0B09;--card:#181510;--gold:#C9A96E;--gold-lt:#E8C98A;--gold-d:#7A6240;
+  --ivory:#F0E6D0;--ivory-d:#9A8E7A;--rose:#C4687A;--rose-lt:#E89AAA;
+  --teal:#4A9B8E;--teal-lt:#7DC4BA;
+  --border:rgba(201,169,110,0.2);--border-lt:rgba(201,169,110,0.08);
+  --sam:#C4687A;--sam-lt:rgba(196,104,122,0.12);--sam-b:rgba(196,104,122,0.3);
+  --matt:#4A9B8E;--matt-lt:rgba(74,155,142,0.12);--matt-b:rgba(74,155,142,0.3);
+  --shared:#C9A96E;--shared-lt:rgba(201,169,110,0.1);
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{background:var(--bg);color:var(--ivory);font-family:'Josefin Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;padding-bottom:calc(100px + var(--safe-b))}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.55) 100%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 0 40px}
+.hero{text-align:center;padding:44px 24px 28px;border-bottom:1px solid var(--border);position:relative}
+.hero::before,.hero::after{content:'';position:absolute;width:48px;height:48px;border-color:var(--gold-d);border-style:solid;opacity:0.45}
+.hero::before{top:16px;left:16px;border-width:1px 0 0 1px}.hero::after{top:16px;right:16px;border-width:1px 1px 0 0}
+.eyebrow{font-size:10px;letter-spacing:5px;color:var(--gold);opacity:0.65;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,9vw,58px);font-weight:300;line-height:1;letter-spacing:2px;color:var(--gold-lt);text-shadow:0 0 40px rgba(201,169,110,0.25);margin-bottom:5px}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--rose-lt);letter-spacing:3px}
+.hero-date{font-size:10px;letter-spacing:3px;color:var(--ivory-d);text-transform:uppercase;margin-top:8px}
+.who-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border-lt);position:sticky;top:0;z-index:40;background:rgba(12,11,9,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.who-tab{padding:13px 8px 11px;text-align:center;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;border-bottom:2px solid transparent;transition:border-color 0.2s}
+.who-tab:active{background:rgba(201,169,110,0.04)}
+.who-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;display:block;line-height:1;color:var(--ivory-d);transition:color 0.2s}
+.who-sub{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--ivory-d);margin-top:3px;display:block}
+.who-prog{font-size:9px;color:var(--ivory-d);margin-top:4px;display:block;transition:color 0.2s}
+.tab-sam.active{border-bottom-color:var(--sam)}.tab-sam.active .who-name,.tab-sam.active .who-prog{color:var(--rose-lt)}
+.tab-matt.active{border-bottom-color:var(--matt)}.tab-matt.active .who-name,.tab-matt.active .who-prog{color:var(--teal-lt)}
+.tab-shared.active{border-bottom-color:var(--gold)}.tab-shared.active .who-name,.tab-shared.active .who-prog{color:var(--gold-lt)}
+.panel{display:none}.panel.active{display:block}
+.panel-header{padding:18px 24px 12px;border-bottom:1px solid var(--border-lt)}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--ivory-d)}
+.panel-stats{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
+.pstat{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 10px;border-radius:2px}
+.pstat-sam{background:var(--sam-lt);color:var(--rose-lt);border:1px solid var(--sam-b)}
+.pstat-matt{background:var(--matt-lt);color:var(--teal-lt);border:1px solid var(--matt-b)}
+.pstat-shared{background:var(--shared-lt);color:var(--gold);border:1px solid var(--border)}
+.prog-wrap{padding:8px 24px 0}.prog-track{height:2px;background:rgba(201,169,110,0.08);border-radius:2px}
+.prog-fill{height:100%;border-radius:2px;width:0%;transition:width 0.4s ease}
+.prog-sam .prog-fill{background:linear-gradient(to right,var(--sam),var(--rose-lt));box-shadow:0 0 6px rgba(196,104,122,0.4)}
+.prog-matt .prog-fill{background:linear-gradient(to right,var(--matt),var(--teal-lt));box-shadow:0 0 6px rgba(74,155,142,0.4)}
+.prog-shared .prog-fill{background:linear-gradient(to right,var(--gold-d),var(--gold-lt));box-shadow:0 0 6px rgba(201,169,110,0.4)}
+.bag-header{display:flex;align-items:center;gap:12px;padding:22px 24px 0}
+.bag-icon{font-size:20px;flex-shrink:0}
+.bag-title-wrap{flex:1}
+.bag-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold-lt);letter-spacing:1px;display:block}
+.bag-subtitle{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ivory-d);margin-top:2px;display:block}
+.bag-divider{height:1px;margin:10px 24px 0;background:linear-gradient(to right,var(--border),transparent)}
+.cat-label{display:flex;align-items:center;gap:8px;padding:14px 24px 4px;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-d)}
+.cat-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(201,169,110,0.12),transparent)}
+.shared-notice{margin:8px 20px 4px;padding:8px 12px;background:rgba(201,169,110,0.05);border:1px solid rgba(201,169,110,0.15);border-radius:4px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-d);text-align:center}
+.item{display:flex;align-items:flex-start;gap:12px;padding:10px 20px;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;border-bottom:1px solid var(--border-lt);transition:background 0.15s;min-height:50px}
+.item:active{background:rgba(201,169,110,0.04)}
+.icheck{width:22px;height:22px;border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:background 0.2s,border-color 0.2s}
+.icheck-sam{border:1.5px solid var(--sam)}.icheck-matt{border:1.5px solid var(--matt)}.icheck-shared{border:1.5px solid var(--gold-d)}
+.item.done .icheck-sam{background:var(--sam);border-color:var(--sam)}
+.item.done .icheck-matt{background:var(--matt);border-color:var(--matt)}
+.item.done .icheck-shared{background:var(--gold-d);border-color:var(--gold-d)}
+.icheck-tick{font-size:11px;color:var(--bg);font-weight:700;font-family:sans-serif;display:none}
+.item.done .icheck-tick{display:block}
+.ibody{flex:1;min-width:0}
+.iname{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--ivory);line-height:1.2;transition:color 0.2s}
+.item.done .iname{color:var(--ivory-d);text-decoration:line-through;text-decoration-color:rgba(154,142,122,0.35)}
+.inote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--ivory-d);opacity:0.7;margin-top:3px;line-height:1.3}
+.item.done .inote{opacity:0.35}
+.imeta{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.badge{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;border-radius:2px}
+.b-high{background:rgba(196,104,122,0.1);color:var(--rose-lt);border:1px solid rgba(196,104,122,0.2)}
+.b-med{background:rgba(201,169,110,0.08);color:var(--gold);border:1px solid rgba(201,169,110,0.15)}
+.b-low{background:rgba(154,142,122,0.08);color:var(--ivory-d);border:1px solid rgba(154,142,122,0.15)}
+.b-buy{background:rgba(74,155,142,0.08);color:var(--teal-lt);border:1px solid rgba(74,155,142,0.18)}
+.b-do{background:rgba(120,100,200,0.08);color:#B8A8E8;border:1px solid rgba(120,100,200,0.18)}
+.b-done{background:rgba(90,158,111,0.1);color:#8FD4A8;border:1px solid rgba(90,158,111,0.2)}
+.b-shared{background:rgba(201,169,110,0.07);color:var(--gold-d);border:1px solid rgba(201,169,110,0.14)}
+#hud{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(12,11,9,0.97);border-top:1px solid var(--border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:10px 24px calc(10px + var(--safe-b))}
+.hud-inner{max-width:680px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.h-sam{font-size:10px;letter-spacing:1px;color:var(--rose-lt)}
+.h-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600}
+.h-mid{text-align:center;font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-lt);font-style:italic}
+.h-matt{font-size:10px;letter-spacing:1px;color:var(--teal-lt);text-align:right}
+.panel.active .item{animation:fadeUp 0.3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.panel.active .item:nth-child(1){animation-delay:.02s}.panel.active .item:nth-child(2){animation-delay:.04s}
+.panel.active .item:nth-child(3){animation-delay:.06s}.panel.active .item:nth-child(4){animation-delay:.08s}
+.panel.active .item:nth-child(5){animation-delay:.10s}.panel.active .item:nth-child(6){animation-delay:.12s}
+.panel.active .item:nth-child(7){animation-delay:.14s}.panel.active .item:nth-child(8){animation-delay:.16s}
+.panel.active .item:nth-child(9){animation-delay:.18s}.panel.active .item:nth-child(10){animation-delay:.20s}
+@media(max-width:400px){.item{padding:10px 14px}.iname{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+  <div class="eyebrow">Las Vegas · 22–25 May 2026</div>
+  <h1>Packing List</h1>
+  <div class="hero-sub">The Glens go to Vegas</div>
+  <div class="hero-date">Tap each item to check it off</div>
+</div>
+<div class="who-tabs">
+  <div class="who-tab tab-sam active" id="tab-sam" onclick="switchTab('sam')"><span class="who-name">Sam</span><span class="who-sub">Her list</span><span class="who-prog" id="prog-sam-tab">0 / 0</span></div>
+  <div class="who-tab tab-shared" id="tab-shared" onclick="switchTab('shared')"><span class="who-name">Shared</span><span class="who-sub">Both responsible</span><span class="who-prog" id="prog-shared-tab">0 / 0</span></div>
+  <div class="who-tab tab-matt" id="tab-matt" onclick="switchTab('matt')"><span class="who-name">Matt</span><span class="who-sub">His list</span><span class="who-prog" id="prog-matt-tab">0 / 0</span></div>
+</div>
+
+<!-- SAM -->
+<div class="panel active" id="panel-sam">
+<div class="panel-header"><div class="panel-title">Sam's packing — organised by bag</div><div class="panel-stats"><span class="pstat pstat-sam" id="sam-done-stat">0 done</span><span class="pstat pstat-sam" id="sam-left-stat">0 to go</span></div><div class="prog-wrap prog-sam"><div class="prog-track"><div class="prog-fill" id="prog-sam"></div></div></div></div>
+
+<div class="bag-header"><span class="bag-icon">✈️</span><div class="bag-title-wrap"><span class="bag-title">Wearing on the Plane</span><span class="bag-subtitle">On your person — outbound flight</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Clothing & Shoes</div>
+<div class="item" id="sw1" onclick="toggle('sw1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Travel outfit</div><div class="inote">Comfortable — long haul both ways</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sw2" onclick="toggle('sw2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Trainers</div><div class="inote">Main walking shoes for the trip</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Eyewear</div>
+<div class="item" id="sw3" onclick="toggle('sw3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Prescription sunglasses</div><div class="inote">Wear on the plane, use throughout the trip</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🎒</span><div class="bag-title-wrap"><span class="bag-title">Carry-on Backpack</span><span class="bag-subtitle">Under seat — accessible throughout flight</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Documents</div>
+<div class="item" id="sc1" onclick="toggle('sc1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Passport</div><div class="inote">Check expiry before travelling</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Health</div>
+<div class="item" id="sc2" onclick="toggle('sc2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Eczema cream</div><div class="inote">Keep accessible — cabin air aggravates</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc3" onclick="toggle('sc3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Eye drops</div><div class="inote">Dry cabin air</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Skincare</div>
+<div class="item" id="sc4" onclick="toggle('sc4','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Liquids toiletries bag</div><div class="inote">Flight skincare — must be in clear bag</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc5" onclick="toggle('sc5','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Face mist</div><div class="inote">Flight hydration</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sc6" onclick="toggle('sc6','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Barrier moisturiser</div><div class="inote">Eczema care — cabin air very drying</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc7" onclick="toggle('sc7','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Makeup basics</div><div class="inote">Enough to freshen up on landing</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Eyewear</div>
+<div class="item" id="sc8" onclick="toggle('sc8','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Contact lenses</div><div class="inote">Full supply plus a spare day</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc9" onclick="toggle('sc9','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Contact lens solution & case</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc10" onclick="toggle('sc10','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Non-prescription sunglasses</div><div class="inote">Backup pair</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Comfort</div>
+<div class="item" id="sc11" onclick="toggle('sc11','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Neck pillow</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sc12" onclick="toggle('sc12','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Eye mask</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sc13" onclick="toggle('sc13','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lip balm</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc14" onclick="toggle('sc14','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hand cream</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sc15" onclick="toggle('sc15','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Snacks</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sc16" onclick="toggle('sc16','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Kindle</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sc17" onclick="toggle('sc17','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Charging cable</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc18" onclick="toggle('sc18','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Power bank</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sc19" onclick="toggle('sc19','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Headphones</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Cabin Case</span><span class="bag-subtitle">Overhead locker — valuables only · Shared with Matt</span></div></div>
+<div class="bag-divider"></div>
+<div class="shared-notice">Shared case — both pack their own items into it</div>
+<div class="cat-label">Ceremony</div>
+<div class="item" id="scc1" onclick="toggle('scc1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vow renewal dress</div><div class="inote">Do not put in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="scc2" onclick="toggle('scc2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vow renewal shoes</div><div class="inote">Photo ready</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="scc3" onclick="toggle('scc3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Nude strapless bra</div><div class="inote">Under the dress</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="scc4" onclick="toggle('scc4','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Bridal hair piece</div><div class="inote">Irreplaceable — carry-on only</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="scc5" onclick="toggle('scc5','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Ribbon for hair piece</div><div class="inote">Replace before packing</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="cat-label">Jewellery & Accessories</div>
+<div class="item" id="scc6" onclick="toggle('scc6','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Wedding rings</div><div class="inote">Never in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="scc7" onclick="toggle('scc7','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Engagement ring & ceremony jewellery</div><div class="inote">Earrings, necklace — for the ceremony</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Hold Bag</span><span class="bag-subtitle">Checked luggage · Shared with Matt</span></div></div>
+<div class="bag-divider"></div>
+<div class="shared-notice">Shared bag — both pack their own items into it</div>
+<div class="cat-label">Clothing</div>
+<div class="item" id="sh1" onclick="toggle('sh1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Evening outfits</div><div class="inote">3 nights out — dinners & bars</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh2" onclick="toggle('sh2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Day outfits</div><div class="inote">Comfortable for casino crawl</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh3" onclick="toggle('sh3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Underwear</div><div class="inote">Enough for the full trip</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh4" onclick="toggle('sh4','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Sleepwear</div><div class="imeta"><span class="badge b-low">Low</span></div></div></div>
+<div class="item" id="sh5" onclick="toggle('sh5','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Light jacket</div><div class="inote">Casinos are heavily air conditioned</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh6" onclick="toggle('sh6','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Socks</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh7" onclick="toggle('sh7','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Comfy outfit for flight home</div><div class="inote">10+ hour flight back</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Shoes</div>
+<div class="item" id="sh8" onclick="toggle('sh8','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vans</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Hair</div>
+<div class="item" id="sh9" onclick="toggle('sh9','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Bobby pins</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh10" onclick="toggle('sh10','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Travel dry shampoo</div><div class="inote">Between blowout and ceremony — don't wash it out</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh11" onclick="toggle('sh11','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Straighteners</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh12" onclick="toggle('sh12','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Mini hairspray</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh13" onclick="toggle('sh13','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hair oil</div><div class="inote">Desert air is very drying</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh14" onclick="toggle('sh14','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hairbrush</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Makeup</div>
+<div class="item" id="sh15" onclick="toggle('sh15','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Estée Lauder Double Wear Foundation</div><div class="inote">Buy correct shade before trip</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh16" onclick="toggle('sh16','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Concealer</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh17" onclick="toggle('sh17','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lola's lashes</div><div class="inote">Buy new lashes</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh18" onclick="toggle('sh18','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Blush / contour / bronzer / highlighter</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh19" onclick="toggle('sh19','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Wedding perfume</div><div class="inote">Take remaining bottle</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh20" onclick="toggle('sh20','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Mascara / eyeliner / brows / eyeshadow</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh21" onclick="toggle('sh21','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Setting spray & primer</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh22" onclick="toggle('sh22','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Makeup brushes</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh23" onclick="toggle('sh23','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Tweezers</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Skincare</div>
+<div class="item" id="sh24" onclick="toggle('sh24','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Gentle cleanser</div><div class="inote">Sensitive skin</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh25" onclick="toggle('sh25','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hydrating sheet masks</div><div class="inote">Skin prep before ceremony</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh26" onclick="toggle('sh26','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Under-eye patches</div><div class="inote">Puffiness after the flight</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh27" onclick="toggle('sh27','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lip mask</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh28" onclick="toggle('sh28','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">SPF sunscreen</div><div class="inote">For outdoor stretches</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="sh29" onclick="toggle('sh29','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lip SPF</div><div class="inote">Separate to lip balm</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="sh30" onclick="toggle('sh30','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Shower gel / shampoo / conditioner</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="sh31" onclick="toggle('sh31','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Toothbrush & toothpaste</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">👜</span><div class="bag-title-wrap"><span class="bag-title">Handbag</span><span class="bag-subtitle">On the trip in Vegas — day & night</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Beauty</div>
+<div class="item" id="shb1" onclick="toggle('shb1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Pressed powder compact</div><div class="inote">Touch-ups throughout the day</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="shb2" onclick="toggle('shb2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lipstick & liner</div><div class="inote">Decide shade before trip</div><div class="imeta"><span class="badge b-med">Med</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="item" id="shb3" onclick="toggle('shb3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Travel size deodorant / fragrance pen</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Essentials</div>
+<div class="item" id="shb4" onclick="toggle('shb4','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Electrolyte sachets</div><div class="inote">A couple in the bag at all times</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shb5" onclick="toggle('shb5','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Painkillers</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shb6" onclick="toggle('shb6','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lip balm</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shb7" onclick="toggle('shb7','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Blister plasters</div><div class="inote">Crawl day essential</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shb8" onclick="toggle('shb8','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Reusable water bottle</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="shb9" onclick="toggle('shb9','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Charging cable</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shb10" onclick="toggle('shb10','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Power bank</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">✅</span><div class="bag-title-wrap"><span class="bag-title">Pre-trip To-Dos</span><span class="bag-subtitle">Before you leave home</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Jewellery</div>
+<div class="item" id="st1" onclick="toggle('st1','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Engagement ring replating</div><div class="inote">White gold — book in advance</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="item" id="st2" onclick="toggle('st2','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Wedding ring polish</div><div class="inote">Platinum</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="cat-label">Beauty</div>
+<div class="item" id="st3" onclick="toggle('st3','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Nails done</div><div class="inote">Book appointment in advance</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="cat-label">Prep</div>
+<div class="item" id="st4" onclick="toggle('st4','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Pre-cut second skin into small pieces</div><div class="inote">Tattoo aftercare — for both of you</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="item" id="st5" onclick="toggle('st5','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Download offline Google Maps — Las Vegas</div><div class="inote">Patchy signal in casinos</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="item" id="st6" onclick="toggle('st6','sam')"><div class="icheck icheck-sam"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Load & cache trip pages on phone WiFi</div><div class="inote">theglens.github.io/vegas/ — open before flying</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+</div><!-- /panel-sam -->
+
+<!-- SHARED -->
+<div class="panel" id="panel-shared">
+<div class="panel-header"><div class="panel-title">Shared items — both responsible</div><div class="panel-stats"><span class="pstat pstat-shared" id="shared-done-stat">0 done</span><span class="pstat pstat-shared" id="shared-left-stat">0 to go</span></div><div class="prog-wrap prog-shared"><div class="prog-track"><div class="prog-fill" id="prog-shared"></div></div></div></div>
+
+<div class="bag-header"><span class="bag-icon">📋</span><div class="bag-title-wrap"><span class="bag-title">Documents & Money</span><span class="bag-subtitle">Both carry-on backpacks</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Documents — Screenshot on Both Phones</div>
+<div class="item" id="shd1" onclick="toggle('shd1','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">ESTA approvals</div><div class="inote">Already done — screenshot on both phones</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+<div class="item" id="shd2" onclick="toggle('shd2','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Travel insurance</div><div class="inote">Screenshot + print backup — both phones</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+<div class="item" id="shd3" onclick="toggle('shd3','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Flight confirmations</div><div class="inote">Screenshot on both phones</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+<div class="item" id="shd4" onclick="toggle('shd4','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hotel reservation — Vdara</div><div class="inote">Screenshot on both phones</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+<div class="item" id="shd5" onclick="toggle('shd5','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vow renewal booking confirmation</div><div class="inote">Screenshot on both phones</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+<div class="cat-label">Money</div>
+<div class="item" id="shd6" onclick="toggle('shd6','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">US dollars — small bills</div><div class="inote">Break into $1s and $5s for tips everywhere</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do tomorrow</span></div></div></div>
+<div class="item" id="shd7" onclick="toggle('shd7','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">No foreign transaction fee cards</div><div class="inote">Confirmed ✓</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-done">Done</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Cabin Case</span><span class="bag-subtitle">Overhead locker — valuables only</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Ceremony & Irreplaceables</div>
+<div class="item" id="shcc1" onclick="toggle('shcc1','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Fake flower bouquet</div><div class="inote">Irreplaceable — cabin case only</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shcc2" onclick="toggle('shcc2','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Sam — dress, shoes, bra, hair piece, ribbon</div><div class="inote">See Sam's list for full breakdown</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shcc3" onclick="toggle('shcc3','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Sam — wedding rings & ceremony jewellery</div><div class="inote">Never in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shcc4" onclick="toggle('shcc4','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Matt — vow renewal outfit & shoes</div><div class="inote">See Matt's list for full breakdown</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shcc5" onclick="toggle('shcc5','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Matt — wedding ring</div><div class="inote">Never in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Hold Bag</span><span class="bag-subtitle">Checked luggage — shared</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Tech</div>
+<div class="item" id="shh1" onclick="toggle('shh1','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">US plug adapters</div><div class="inote">At least 2</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+<div class="cat-label">Health</div>
+<div class="item" id="shh2" onclick="toggle('shh2','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">First aid kit inc. Imodium</div><div class="inote">Different food & water — always worth having</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="shh3" onclick="toggle('shh3','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Electrolytes & hangover kit</div><div class="inote">Pack plenty — most important item on this list</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Aftercare</div>
+<div class="item" id="shh4" onclick="toggle('shh4','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Second skin / tattoo aftercare</div><div class="inote">Pre-cut into small pieces before trip</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-buy">Buy</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">✅</span><div class="bag-title-wrap"><span class="bag-title">Shared To-Dos</span><span class="bag-subtitle">Before you leave</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Tech — Both Phones</div>
+<div class="item" id="sht1" onclick="toggle('sht1','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Download offline Google Maps — Las Vegas</div><div class="inote">Both phones — patchy signal in casinos</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="item" id="sht2" onclick="toggle('sht2','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Load & cache trip pages on phone WiFi</div><div class="inote">theglens.github.io/vegas/ — open before flying</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="cat-label">Book</div>
+<div class="item" id="sht3" onclick="toggle('sht3','shared')"><div class="icheck icheck-shared"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Drybar appointment — Fashion Show Mall</div><div class="inote">Book online — Sunday 14:00</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Book</span></div></div></div>
+</div><!-- /panel-shared -->
+
+<!-- MATT -->
+<div class="panel" id="panel-matt">
+<div class="panel-header"><div class="panel-title">Matt's packing — organised by bag</div><div class="panel-stats"><span class="pstat pstat-matt" id="matt-done-stat">0 done</span><span class="pstat pstat-matt" id="matt-left-stat">0 to go</span></div><div class="prog-wrap prog-matt"><div class="prog-track"><div class="prog-fill" id="prog-matt"></div></div></div></div>
+
+<div class="bag-header"><span class="bag-icon">✈️</span><div class="bag-title-wrap"><span class="bag-title">Wearing on the Plane</span><span class="bag-subtitle">On your person — outbound flight</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Clothing & Shoes</div>
+<div class="item" id="mw1" onclick="toggle('mw1','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Travel outfit</div><div class="inote">Comfortable — long haul both ways</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mw2" onclick="toggle('mw2','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Trainers</div><div class="inote">Only pair of casual shoes — wear throughout</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Eyewear</div>
+<div class="item" id="mw3" onclick="toggle('mw3','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Prescription sunglasses</div><div class="inote">Wear on the plane, use throughout the trip</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🎒</span><div class="bag-title-wrap"><span class="bag-title">Carry-on Backpack</span><span class="bag-subtitle">Under seat — accessible throughout flight</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Documents</div>
+<div class="item" id="mc1" onclick="toggle('mc1','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Passport</div><div class="inote">Check expiry before travelling</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Health</div>
+<div class="item" id="mc2" onclick="toggle('mc2','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Eye drops</div><div class="inote">Dry cabin air</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Eyewear</div>
+<div class="item" id="mc3" onclick="toggle('mc3','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Contact lenses</div><div class="inote">Full supply plus a spare day</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mc4" onclick="toggle('mc4','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Contact lens solution & case</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mc5" onclick="toggle('mc5','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Non-prescription sunglasses</div><div class="inote">Backup pair</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Comfort</div>
+<div class="item" id="mc6" onclick="toggle('mc6','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Neck pillow</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mc7" onclick="toggle('mc7','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Eye mask</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mc8" onclick="toggle('mc8','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Lip balm</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mc9" onclick="toggle('mc9','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Hand cream</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mc10" onclick="toggle('mc10','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Snacks</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mc11" onclick="toggle('mc11','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Kindle</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mc12" onclick="toggle('mc12','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Charging cable</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mc13" onclick="toggle('mc13','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Power bank</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mc14" onclick="toggle('mc14','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Headphones</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Cabin Case</span><span class="bag-subtitle">Overhead locker — valuables only · Shared with Sam</span></div></div>
+<div class="bag-divider"></div>
+<div class="shared-notice">Shared case — both pack their own items into it</div>
+<div class="cat-label">Ceremony</div>
+<div class="item" id="mcc1" onclick="toggle('mcc1','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vow renewal outfit</div><div class="inote">Do not put in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mcc2" onclick="toggle('mcc2','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Vow renewal / smart shoes</div><div class="inote">For ceremony & dinners — only pair going in the case</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="cat-label">Valuables</div>
+<div class="item" id="mcc3" onclick="toggle('mcc3','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Wedding ring</div><div class="inote">Never in hold luggage</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">🧳</span><div class="bag-title-wrap"><span class="bag-title">Hold Bag</span><span class="bag-subtitle">Checked luggage · Shared with Sam</span></div></div>
+<div class="bag-divider"></div>
+<div class="shared-notice">Shared bag — both pack their own items into it</div>
+<div class="cat-label">Clothing</div>
+<div class="item" id="mh1" onclick="toggle('mh1','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Evening outfits</div><div class="inote">3 nights out — dinners & bars</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh2" onclick="toggle('mh2','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Day outfits</div><div class="inote">Comfortable for long days</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh3" onclick="toggle('mh3','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Underwear & socks</div><div class="inote">Enough for the full trip</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mh4" onclick="toggle('mh4','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Sleepwear</div><div class="imeta"><span class="badge b-low">Low</span></div></div></div>
+<div class="item" id="mh5" onclick="toggle('mh5','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Light jacket</div><div class="inote">Casinos are cold</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh6" onclick="toggle('mh6','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Comfy outfit for flight home</div><div class="inote">10+ hour flight back</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="cat-label">Toiletries</div>
+<div class="item" id="mh7" onclick="toggle('mh7','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Shower gel / shampoo / conditioner</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh8" onclick="toggle('mh8','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Toothbrush & toothpaste</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mh9" onclick="toggle('mh9','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Deodorant</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+<div class="item" id="mh10" onclick="toggle('mh10','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Aftershave</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh11" onclick="toggle('mh11','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Beard oil</div><div class="imeta"><span class="badge b-med">Med</span></div></div></div>
+<div class="item" id="mh12" onclick="toggle('mh12','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">SPF sunscreen</div><div class="inote">For outdoor stretches</div><div class="imeta"><span class="badge b-high">High</span></div></div></div>
+
+<div class="bag-header" style="margin-top:16px"><span class="bag-icon">✅</span><div class="bag-title-wrap"><span class="bag-title">Pre-trip To-Dos</span><span class="bag-subtitle">Before you leave home</span></div></div>
+<div class="bag-divider"></div>
+<div class="cat-label">Jewellery</div>
+<div class="item" id="mt1" onclick="toggle('mt1','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Wedding ring polish</div><div class="inote">Palladium — book in advance</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="cat-label">Jobs on the Day</div>
+<div class="item" id="mt2" onclick="toggle('mt2','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Buy champagne — Lee's Discount Liquor</div><div class="inote">Fashion Show Mall · Sunday · Matt's job 🍾</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Sunday</span></div></div></div>
+<div class="cat-label">Tech</div>
+<div class="item" id="mt3" onclick="toggle('mt3','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Download offline Google Maps — Las Vegas</div><div class="inote">Patchy signal in casinos</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+<div class="item" id="mt4" onclick="toggle('mt4','matt')"><div class="icheck icheck-matt"><span class="icheck-tick">✓</span></div><div class="ibody"><div class="iname">Load & cache trip pages on phone WiFi</div><div class="inote">theglens.github.io/vegas/ — open before flying</div><div class="imeta"><span class="badge b-high">High</span><span class="badge b-do">Do</span></div></div></div>
+</div><!-- /panel-matt -->
+
+</div><!-- /wrap -->
+
+<div id="hud">
+  <div class="hud-inner">
+    <div class="h-sam">Sam<br><span class="h-val" id="h-sam" style="color:var(--rose-lt)">0 / 0</span></div>
+    <div class="h-mid">✦</div>
+    <div class="h-matt">Matt<br><span class="h-val" id="h-matt" style="color:var(--teal-lt)">0 / 0</span></div>
+  </div>
+</div>
+
+<script>
+var state={};
+function switchTab(t){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.who-tab').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('panel-'+t).classList.add('active');
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('panel-'+t).scrollIntoView({behavior:'smooth',block:'start'});
+}
+function toggle(id,who){
+  var el=document.getElementById(id);
+  if(!el)return;
+  if(state[id]){delete state[id];el.classList.remove('done')}
+  else{state[id]=true;el.classList.add('done')}
+  updateAll();
+}
+function updateAll(){
+  ['sam','shared','matt'].forEach(function(who){
+    var panel=document.getElementById('panel-'+who);
+    var items=panel.querySelectorAll('.item');
+    var done=0;
+    items.forEach(function(i){if(i.classList.contains('done'))done++});
+    var total=items.length;
+    var pct=total>0?(done/total*100):0;
+    var pf=document.getElementById('prog-'+who);if(pf)pf.style.width=pct+'%';
+    var ds=document.getElementById(who+'-done-stat');if(ds)ds.textContent=done+' done';
+    var ls=document.getElementById(who+'-left-stat');if(ls)ls.textContent=(total-done)+' to go';
+    var tp=document.getElementById('prog-'+who+'-tab');if(tp)tp.textContent=done+' / '+total;
+    if(who==='sam')document.getElementById('h-sam').textContent=done+' / '+total;
+    if(who==='matt')document.getElementById('h-matt').textContent=done+' / '+total;
+  });
+}
+updateAll();
+</script>
+</body>
+</html>
